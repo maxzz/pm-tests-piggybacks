@@ -1,4 +1,8 @@
-export function print_Element(eventName: string, nickname: string, element: Element) {
+import { maxEventNameLength } from './9-types.ts';
+
+export function print_Element(event: Event, nickname: string, element: Element) {
+    const paddedType = event.type.padStart(maxEventNameLength, ' ');
+
     let value = (element as HTMLInputElement).value?.trim() || '';
     value = value.length ? ` value: ${value}` : '';
 
@@ -11,7 +15,7 @@ export function print_Element(eventName: string, nickname: string, element: Elem
     const formatObj = isEmpty ? '' : { element: `${value}${textContent}` };
 
     console.log(
-        `%c${eventName}%c %c${nickname}%c${format}`,
+        `%c${paddedType}%c %c${nickname}%c${format}`,
         'color: #000; font-weight: bold;',
         '',
         'color: #006B8E; font-size: 10px;',

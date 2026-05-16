@@ -1,19 +1,27 @@
-import { print_Event } from './8-print-helpers.ts';
+import { print_Element } from './8-print-helpers.ts';
+import { type WatchedField, expectHtmlElement } from './9-types.ts';
 
 export function attachButtonListeners() {
-    preventButtonSubmit('#ctl00_WebPartManager_ESigCaptureWP_AddSignerButton');
-    preventButtonSubmit('#ctl00_WebPartManager_ButtonsBar_SubmitSignatures');
-}
+    for (const button of watchButtons) {
 
-function preventButtonSubmit(selector: string) {
-    const element = document.querySelector(selector);
-    if (!element) {
-        console.error(`Button not found: ${selector}`);
-        return;
+        const { selector, nickname } = button;
+        const element = document.querySelector(selector);
+        const htmlElement = expectHtmlElement(element, selector);
+
+        htmlElement.addEventListener('click', (e) => {
+            e.preventDefault();
+            print_Element(e, nickname, htmlElement);
+        });
     }
-
-    element.addEventListener('click', (e) => {
-        e.preventDefault();
-        console.log(`[submit]: ${selector}`, print_Event(e));
-    });
 }
+
+const watchButtons: readonly WatchedField[] = [
+    {
+        selector: '#ctl00_WebPartManager_ESigCaptureWP_AddSignerButton',
+        nickname: '  add',
+    },
+    {
+        selector: '#ctl00_WebPartManager_ButtonsBar_SubmitSignatures',
+        nickname: 'submi',
+    },
+];

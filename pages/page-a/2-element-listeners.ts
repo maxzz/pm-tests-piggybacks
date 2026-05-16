@@ -1,10 +1,9 @@
 import { print_Element } from './8-print-helpers.ts';
+import { type WatchedField, expectHtmlElement, watchedFieldEventNames } from './9-types.ts';
 
 export function attachFieldActivityLogging() {
     attachFieldActivityLogging_internal(watchedFields);
 }
-
-type WatchedField = { selector: string; nickname: string; };
 
 const watchedFields: readonly WatchedField[] = [
     {
@@ -21,36 +20,21 @@ const watchedFields: readonly WatchedField[] = [
     },
 ];
 
-const watchedFieldEventNames = [
-    ' focus',
-    '  blur',
-    ' input',
-    'change',
-    ' click',
-] as const;
-
 function attachFieldActivityLogging_internal(fields: readonly WatchedField[]) {
     const seen = new WeakSet<EventTarget>();
 
     for (const { selector, nickname } of fields) {
         for (const el of Array.from(document.querySelectorAll(selector))) {
-            if (!el) {
-                console.error(`Element not found: ${selector}`);
-                continue;
-            }
-            if (!(el instanceof HTMLElement)) {
-                console.error(`Element is not an HTMLElement: ${selector}`);
-                continue;
-            }
-            if (seen.has(el)) {
-                continue;
-            }
-            seen.add(el);
+            const htmlElement = expectHtmlElement(el, selector);
 
-            const htmlElement = el as HTMLElement;
+            if (seen.has(htmlElement)) {
+                continue;
+            }
+            seen.add(htmlElement);
+
             for (const eventName of watchedFieldEventNames) {
-                htmlElement.addEventListener(eventName.trim(), () => {
-                    print_Element(eventName, nickname, htmlElement);
+                htmlElement.addEventListener(eventName, (event) => {
+                    print_Element(event, nickname, htmlElement);
                 });
             }
         }
