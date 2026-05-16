@@ -1,4 +1,4 @@
-export type WatchedField = { selector: string; nickname: string; };
+export type WatchedField = { selector: string; nickname: string };
 
 export const watchedFieldEventNames = [
     'focus',

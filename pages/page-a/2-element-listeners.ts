@@ -1,5 +1,5 @@
-import { print_Element } from './8-print-helpers.ts';
-import { type WatchedField, expectHtmlElement, watchedFieldEventNames } from './9-types.ts';
+import { type WatchedField, expectHtmlElement, watchedFieldEventNames } from '@shared/9-types.ts';
+import { print_Element } from '@shared/8-print-helpers.ts';
 
 export function attachFieldActivityLogging() {
     attachFieldActivityLogging_internal(watchedFields);

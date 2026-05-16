@@ -10,13 +10,14 @@ export function print_Element(event: Event, nickname: string, element: Element) 
     textContent = textContent.length ? ` textContent: ${textContent}` : '';
 
     const isEmpty = !value && !textContent;
-
     const format = isEmpty ? '%s' : '%o';
     const formatObj = isEmpty ? '' : { element: `${value}${textContent}` };
 
+    const dimEventName = event.type === 'focus' || event.type === 'blur';
+
     console.log(
         `%c${paddedType}%c %c${nickname}%c${format}`,
-        'color: #000; font-weight: bold;',
+        dimEventName ? 'color: #797979; ' : 'color: #000; font-weight: bold;',
         '',
         'color: #006B8E; font-size: 10px;',
         '',

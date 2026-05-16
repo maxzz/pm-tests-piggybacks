@@ -17,7 +17,12 @@
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "erasableSyntaxOnly": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+
+    /* Paths */
+    "paths": {
+        "@shared/*": ["./shared/*"]
+    }
   },
-  "include": ["src", "pages"]
+  "include": ["src", "pages", "shared"]
 }

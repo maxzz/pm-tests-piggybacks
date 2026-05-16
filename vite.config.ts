@@ -25,6 +25,11 @@ function getHtmlInputs() {
 
 export default defineConfig({
     base: '',
+    resolve: {
+        alias: {
+            '@shared': path.resolve(__dirname, 'shared'),
+        },
+    },
     build: {
         rollupOptions: {
             input: getHtmlInputs(),
