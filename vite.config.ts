@@ -24,6 +24,7 @@ function getHtmlInputs() {
 }
 
 export default defineConfig({
+    base: '',
     build: {
         rollupOptions: {
             input: getHtmlInputs(),

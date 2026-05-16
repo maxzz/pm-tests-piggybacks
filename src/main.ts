@@ -5,6 +5,7 @@ import heroImg from './assets/hero.png';
 import './style.css';
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
+<nav id="page-nav" aria-label="Pages"></nav>
 <section id="center">
   <div class="hero">
     <img src="${heroImg}" class="base" width="170" height="179">

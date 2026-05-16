@@ -7,13 +7,15 @@
     "devDependencies": {
         "@types/node": "^25.8.0",
         "typescript": "~6.0.2",
+        "upen": "^1.0.2",
         "vite": "^8.0.12"
     },
     "scripts": {
         "dev": "pnpm -s gen:pages && vite",
-        "build": "pnpm -s gen:pages && tsc && vite build",
+        "build": "pnpm -s gen:pages && upen && tsc && vite build",
         "preview": "vite preview",
         
+        "to-npm": "pnpm run build && gh-pages -d dist",
         "gen:pages": "node scripts/generate-pages.js"
     }
 }
