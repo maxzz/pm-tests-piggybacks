@@ -1,17 +1,19 @@
 {
-  "name": "piggybacks",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "gen:pages": "node scripts/generate-pages.js",
-    "dev": "pnpm -s gen:pages && vite",
-    "build": "pnpm -s gen:pages && tsc && vite build",
-    "preview": "vite preview"
-  },
-  "devDependencies": {
-    "@types/node": "^25.8.0",
-    "typescript": "~6.0.2",
-    "vite": "^8.0.12"
-  }
+    "name": "pm-tests-piggybacks",
+    "description": "Piggybacks tests for PM",
+    "version": "0.0.1",
+    "private": true,
+    "type": "module",
+    "devDependencies": {
+        "@types/node": "^25.8.0",
+        "typescript": "~6.0.2",
+        "vite": "^8.0.12"
+    },
+    "scripts": {
+        "dev": "pnpm -s gen:pages && vite",
+        "build": "pnpm -s gen:pages && tsc && vite build",
+        "preview": "vite preview",
+        
+        "gen:pages": "node scripts/generate-pages.js"
+    }
 }

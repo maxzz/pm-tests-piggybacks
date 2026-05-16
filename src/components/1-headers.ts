@@ -1,3 +1,4 @@
+import '../nav.css';
 import { pages } from './pages.ts';
 
 function normalizePathname(pathname: string) {
@@ -36,3 +37,4 @@ export function renderNav(navSelector: string) {
     }
 }
 
+renderNav('#page-nav');
