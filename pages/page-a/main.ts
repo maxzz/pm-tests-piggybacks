@@ -1,35 +1,44 @@
 import './style.css';
 
-// Event types to watch
+type WatchedField = { selector: string; nickname: string };
 
-const watchedFieldSelectors: readonly string[] = [
-    '#ctl00_WebPartManager_ESigCaptureWP_SignerField_Edit',
-    '#ctl00_WebPartManager_ESigCaptureWP_SignerPwdField_ctl00',
-    '#ctl00_WebPartManager_ESigCaptureWP_CosignerComments_ctl00',
+const watchedFields: readonly WatchedField[] = [
+    {
+        selector: '#ctl00_WebPartManager_ESigCaptureWP_SignerField_Edit',
+        nickname: 'signer',
+    },
+    {
+        selector: '#ctl00_WebPartManager_ESigCaptureWP_SignerPwdField_ctl00',
+        nickname: 'signerPwd',
+    },
+    {
+        selector: '#ctl00_WebPartManager_ESigCaptureWP_CosignerComments_ctl00',
+        nickname: 'signerComment',
+    },
 ];
 
-function attachFieldActivityLogging(selectors: readonly string[]) {
+function attachFieldActivityLogging(fields: readonly WatchedField[]) {
     const seen = new WeakSet<EventTarget>();
 
-    for (const selector of selectors) {
+    for (const { selector, nickname } of fields) {
         for (const el of Array.from(document.querySelectorAll(selector))) {
             if (seen.has(el)) continue;
             seen.add(el);
 
             el.addEventListener('focus', () => {
-                console.log('[focus]', selector, el);
+                console.log('[focus]', nickname, el);
             });
             el.addEventListener('blur', () => {
-                console.log('[blur]', selector, el);
+                console.log('[blur]', nickname, el);
             });
             el.addEventListener('input', () => {
-                console.log('[input]', selector, el);
+                console.log('[input]', nickname, el);
             });
             el.addEventListener('change', () => {
-                console.log('[change]', selector, el);
+                console.log('[change]', nickname, el);
             });
             el.addEventListener('click', () => {
-                console.log('[click]', selector, el);
+                console.log('[click]', nickname, el);
             });
         }
     }
@@ -53,7 +62,7 @@ function preventButtonSubmit(selector: string) {
 // Main function
 
 function main() {
-    attachFieldActivityLogging(watchedFieldSelectors);
+    attachFieldActivityLogging(watchedFields);
     preventButtonSubmit('#ctl00_WebPartManager_ESigCaptureWP_AddSignerButton');
 }
 
