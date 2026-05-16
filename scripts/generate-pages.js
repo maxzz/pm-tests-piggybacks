@@ -1,27 +1,48 @@
+//@ts-check
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+function main() {
+    const __filename = fileURLToPath(import.meta.url);
+    const __dirname = path.dirname(__filename);
 
-const rootDir = path.resolve(__dirname, '..');
-const pagesDir = path.resolve(rootDir, 'pages');
-const outFile = path.resolve(rootDir, 'src', 'components', 'pages.ts');
+    const rootDir = path.resolve(__dirname, '..');
+    const pagesDir = path.resolve(rootDir, 'pages');
+    const outFile = path.resolve(rootDir, 'src', 'components', '9-pages.ts');
 
-function toPosixPath(p) {
-    return p.replaceAll('\\', '/');
+    try {
+        const pages = listPageFolders(rootDir, pagesDir);
+        const content = renderPagesTs(pages);
+
+        fs.mkdirSync(path.dirname(outFile), { recursive: true });
+
+        let prev = null;
+        try {
+            prev = fs.readFileSync(outFile, 'utf8');
+        } catch {
+            // ignore
+        }
+
+        if (prev === content) {
+            console.log(`${toPosixPath(path.relative(rootDir, outFile))} is up to date (${pages.length} pages).`);
+            process.exit(0);
+        }
+
+        fs.writeFileSync(outFile, content, 'utf8');
+        console.log(`Wrote ${toPosixPath(path.relative(rootDir, outFile))} (${pages.length} pages).`);
+
+        const urls = pages.map((p) => `/${ensureTrailingSlash(p.path)}`);
+        console.log(`URLs:\n${urls.map((u) => `- ${u}`).join('\n')}`);
+    } catch (err) {
+        console.error(err instanceof Error ? err.message : String(err));
+        process.exitCode = 1;
+    }
 }
 
-function ensureTrailingSlash(p) {
-    return p.endsWith('/') ? p : `${p}/`;
-}
-
-function listPageFolders() {
+function listPageFolders(rootDir, pagesDir) {
     if (!fs.existsSync(pagesDir)) {
-        throw new Error(
-            `Expected a "pages" folder at ${toPosixPath(path.relative(rootDir, pagesDir))}`,
-        );
+        throw new Error(`Expected a "pages" folder at ${toPosixPath(path.relative(rootDir, pagesDir))}`);
     }
 
     const dirents = fs.readdirSync(pagesDir, { withFileTypes: true });
@@ -33,6 +54,7 @@ function listPageFolders() {
     for (const folder of folders) {
         const folderAbs = path.resolve(pagesDir, folder);
         const indexAbs = path.resolve(folderAbs, 'index.html');
+
         if (!fs.existsSync(indexAbs)) {
             missingIndex.push(toPosixPath(path.relative(rootDir, indexAbs)));
             continue;
@@ -45,10 +67,7 @@ function listPageFolders() {
     }
 
     if (missingIndex.length) {
-        const message = [
-            `Some subfolders in "pages/" are missing an index.html:`,
-            ...missingIndex.map((p) => `- ${p}`),
-        ].join('\n');
+        const message = [`Some subfolders in "pages/" are missing an index.html:`, ...missingIndex.map((p) => `- ${p}`),].join('\n');
         throw new Error(message);
     }
 
@@ -63,52 +82,30 @@ function renderPagesTs(pages) {
     lines.push('// Do not edit by hand.');
     lines.push('');
     lines.push('export type PageEntry = {');
-    lines.push('  folder: string');
-    lines.push('  path: string');
-    lines.push('}');
+    lines.push('    folder: string');
+    lines.push('    path: string');
+    lines.push('};');
     lines.push('');
+    
     lines.push('export const pages: PageEntry[] = [');
     for (const page of pages) {
-        lines.push(
-            `  { folder: ${JSON.stringify(page.folder)}, path: ${JSON.stringify(
-                page.path,
-            )} },`,
-        );
+        lines.push(`    { folder: ${JSON.stringify(page.folder)}, path: ${JSON.stringify(page.path)} },`);
     }
-    lines.push(']');
+    lines.push('];');
+
     lines.push('');
 
     return lines.join('\n');
 }
 
-try {
-    const pages = listPageFolders();
-    const content = renderPagesTs(pages);
+// Helper functions
 
-    fs.mkdirSync(path.dirname(outFile), { recursive: true });
-
-    let prev = null;
-    try {
-        prev = fs.readFileSync(outFile, 'utf8');
-    } catch {
-        // ignore
-    }
-
-    if (prev === content) {
-        console.log(
-            `${toPosixPath(path.relative(rootDir, outFile))} is up to date (${pages.length} pages).`,
-        );
-        process.exit(0);
-    }
-
-    fs.writeFileSync(outFile, content, 'utf8');
-    console.log(
-        `Wrote ${toPosixPath(path.relative(rootDir, outFile))} (${pages.length} pages).`,
-    );
-
-    const urls = pages.map((p) => `/${ensureTrailingSlash(p.path)}`);
-    console.log(`URLs:\n${urls.map((u) => `- ${u}`).join('\n')}`);
-} catch (err) {
-    console.error(err instanceof Error ? err.message : String(err));
-    process.exitCode = 1;
+function toPosixPath(path) {
+    return path.replaceAll('\\', '/');
 }
+
+function ensureTrailingSlash(path) {
+    return path.endsWith('/') ? path : `${path}/`;
+}
+
+main();

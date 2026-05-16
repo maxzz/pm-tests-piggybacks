@@ -1,13 +1,5 @@
 import { pages } from "./9-pages";
 
-function normalizePathname(pathname: string) {
-    let p = pathname || '/';
-    if (p.endsWith('index.html')) p = p.slice(0, -'index.html'.length);
-    if (!p.startsWith('/')) p = `/${p}`;
-    if (p !== '/' && p.endsWith('/')) p = p.slice(0, -1);
-    return p;
-}
-
 export function renderNav(navSelector: string) {
     const nav = document.querySelector<HTMLElement>(navSelector);
     if (!nav) return;
@@ -34,6 +26,14 @@ export function renderNav(navSelector: string) {
 
         nav.appendChild(a);
     }
+}
+
+function normalizePathname(pathname: string) {
+    let p = pathname || '/';
+    if (p.endsWith('index.html')) p = p.slice(0, -'index.html'.length);
+    if (!p.startsWith('/')) p = `/${p}`;
+    if (p !== '/' && p.endsWith('/')) p = p.slice(0, -1);
+    return p;
 }
 
 renderNav('#page-nav');
