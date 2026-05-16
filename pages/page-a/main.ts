@@ -47,15 +47,22 @@ function attachFieldActivityLogging(fields: readonly WatchedField[]) {
 }
 
 function print_Element(eventName: string, nickname: string, element: Element) {
-    let value = element.getAttribute('value')?.trim() || '';
-    value.length ? `value: ${value}` : '';
+    let value = (element as HTMLInputElement).value?.trim() || '';
+    value = value.length ? `value: ${value}` : '';
     
     let textContent = element.textContent?.trim() || '';
-    textContent.length ? ` textContent: ${textContent}` : '';
+    textContent = textContent.length ? ` textContent: ${textContent}` : '';
     
+    const isEmpty = !value && !textContent;
+
+    let format = '%o'
+    if (isEmpty) {
+        format = '%s';
+    }
+
     console.log(
-        `<${eventName}>${nickname}:%o`,
-        { element: `${value}${textContent}` });
+        `<${eventName}>${nickname}:${format}`,
+        isEmpty ? '' : { element: `${value}${textContent}` });
 }
 
 function print_Event(event: Event) {
