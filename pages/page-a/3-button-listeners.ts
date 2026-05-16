@@ -1,5 +1,5 @@
-import { attachButtonClickListeners } from '@shared/1-initializers.ts';
-import type { WatchedField } from '@shared/9-types.ts';
+import { attachButtonClickListeners } from "@shared/1-initializers";
+import type { WatchedField } from "@shared/9-types";
 
 export function attachButtonListeners() {
     attachButtonClickListeners(watchButtons);

@@ -1,4 +1,4 @@
-import { maxEventNameLength } from './9-types.ts';
+import { maxEventNameLength } from "./9-types";
 
 export function print_Element(event: Event, nickname: string, element: Element) {
     const paddedType = event.type.padStart(maxEventNameLength, ' ');

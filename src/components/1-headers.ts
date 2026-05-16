@@ -1,4 +1,4 @@
-import { pages } from './pages.ts';
+import { pages } from "./9-pages";
 
 function normalizePathname(pathname: string) {
     let p = pathname || '/';

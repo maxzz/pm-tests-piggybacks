@@ -1,5 +1,5 @@
-import { type WatchedField, expectHtmlElement, watchedFieldEventNames, } from './9-types.ts';
-import { print_Element } from './8-print-helpers.ts';
+import { type WatchedField, expectHtmlElement, watchedFieldEventNames, } from "./9-types";
+import { print_Element } from "./8-print-helpers";
 
 export function attachFieldActivityListeners(fields: readonly WatchedField[]) {
     const seen = new WeakSet<EventTarget>();
