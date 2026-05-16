@@ -28,30 +28,38 @@ function attachFieldActivityLogging(fields: readonly WatchedField[]) {
             seen.add(el);
 
             el.addEventListener('focus', () => {
-                console.log(`[focus]: ${nickname}`, print_Element(el));
+                print_Element('focus', nickname, el);
             });
             el.addEventListener('blur', () => {
-                console.log(`[blur]: ${nickname}`, print_Element(el));
+                print_Element('blur', nickname, el);
             });
             el.addEventListener('input', () => {
-                console.log(`[input]: ${nickname}`, print_Element(el));
+                print_Element('input', nickname, el);
             });
             el.addEventListener('change', () => {
-                console.log(`[change]: ${nickname}`, print_Element(el));
+                print_Element('change', nickname, el);
             });
             el.addEventListener('click', () => {
-                console.log(`[click]: ${nickname}`, print_Element(el));
+                print_Element('click', nickname, el);
             });
         }
     }
 }
 
-function print_Element(element: Element) {
-    console.log({element: `[${element.tagName}]: value: ${element.getAttribute('value')} textContent: ${element.textContent}`});
+function print_Element(eventName: string, nickname: string, element: Element) {
+    let value = element.getAttribute('value')?.trim() || '';
+    value.length ? `value: ${value}` : '';
+    
+    let textContent = element.textContent?.trim() || '';
+    textContent.length ? ` textContent: ${textContent}` : '';
+    
+    console.log(
+        `<${eventName}>${nickname}:%o`,
+        { element: `${value}${textContent}` });
 }
 
 function print_Event(event: Event) {
-    console.log({event: `[${event.type}]: target: ${event.target} currentTarget: ${event.currentTarget} composedPath: ${event.composedPath()} trusted: ${event.isTrusted}`});
+    console.log({ event: `[${event.type}]: target: ${event.target} currentTarget: ${event.currentTarget} composedPath: ${event.composedPath()} trusted: ${event.isTrusted}` });
 }
 
 // Prevent button from submitting the form
