@@ -11,11 +11,12 @@ function getHtmlInputs() {
         main: path.resolve(__dirname, 'index.html'),
     };
 
-    for (const entry of fs.readdirSync(`${__dirname}/pages`, { withFileTypes: true })) {
-        if (!entry.isDirectory()) continue;
-        if (!entry.name.startsWith('page-')) continue;
+    const pagesDir = path.resolve(__dirname, 'pages');
 
-        const html = path.resolve(__dirname, entry.name, 'index.html');
+    for (const entry of fs.readdirSync(pagesDir, { withFileTypes: true })) {
+        if (!entry.isDirectory()) continue;
+
+        const html = path.resolve(pagesDir, entry.name, 'index.html');
         if (fs.existsSync(html)) rv[entry.name] = html;
     }
 
