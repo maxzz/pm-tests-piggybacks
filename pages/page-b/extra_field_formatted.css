@@ -10047,7 +10047,7 @@ footer .ft-nav a.NavigationLink {
 }
 .RadMenu a.rmLink {
   box-sizing:content-box;
-  *zoom:1
+  zoom:1; /* tm-error: *zoom:1 */
 }
 .RadMenu a.rmLink:after {
   content:"";
@@ -10913,8 +10913,8 @@ footer .ft-nav a.NavigationLink {
   border-width:1px;
   border-radius:3px;
   display:inline-block;
-  *display:inline;
-  *zoom:1
+  display:inline-block; /* tm-error: *display:inline; */
+  zoom:1; /* tm-error: *zoom:1 */
 }
 .RadSocialShare, .RadSocialShare * {
   box-sizing:content-box
@@ -10928,8 +10928,8 @@ footer .ft-nav a.NavigationLink {
   padding:1px;
   display:inline-block;
   vertical-align:middle;
-  *display:inline;
-  *zoom:1
+  display:inline-block; /* tm-error: *display:inline; */
+  zoom:1; /* tm-error: *zoom:1 */
 }
 .sshLinkItem {
   color:inherit;
@@ -10943,7 +10943,7 @@ footer .ft-nav a.NavigationLink {
   vertical-align:middle
 }
 .sshLinkItem .sshCustomIcon {
-  *zoom:1;
+  zoom:1; /* tm-error: *zoom:1; */
   background-repeat:no-repeat
 }
 .sshIcon:before {
@@ -11009,7 +11009,7 @@ footer .ft-nav a.NavigationLink {
 }
 .sshContent .sshLinkItem .sshCustomIcon, .sshContent .sshLinkItem:hover .sshCustomIcon {
   display:inline-block;
-  *display:inline;
+  display:inline-block; /* tm-error: *display:inline; */
   zoom:1;
   background-position:0 0
 }
