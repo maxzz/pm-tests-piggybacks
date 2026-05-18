@@ -8,7 +8,8 @@ export type PageEntry = {
 
 export const pages: PageEntry[] = [
     { folder: "page-a", path: "pages/page-a" },
-    { folder: "page-b", path: "pages/page-b" },
     { folder: "page-c", path: "pages/page-c" },
+    { folder: "page-c-extracted", path: "pages/page-c-extracted" },
     { folder: "page-d", path: "pages/page-d" },
+    { folder: "page-y-for-new", path: "pages/page-y-for-new" },
 ];
