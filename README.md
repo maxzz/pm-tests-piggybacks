@@ -53,7 +53,7 @@ Each page is served as a separate URL, for example:
 
 `/pages/my-feature/`
 
-In `9-pages.ts`, each entry’s `path` is stored as a **repo-root-relative** string with a **`./`** prefix (for example `./pages/my-feature`). Nav and tooling strip that when building absolute paths like `/pages/my-feature/`.
+In `9-pages.ts`, each entry’s `path` is **repo-root–relative** with a **`./`** prefix (for example `./pages/my-feature`). Nav resolves that with **`import.meta.env.BASE_URL`** so links work at the site root and on **GitHub Pages** (for example `https://user.github.io/repo-name/...`). Set Vite `base` to your repo name when publishing (for example `base: '/pm-tests-piggybacks/'`).
 
 ## Shared code
 

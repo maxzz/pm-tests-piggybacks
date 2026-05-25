@@ -111,7 +111,7 @@ function ensureTrailingSlash(path) {
     return path.endsWith('/') ? path : `${path}/`;
 }
 
-/** Strip leading `./` from generated paths for absolute URL logging. */
+/** Strip leading `./` for logging absolute-style paths. */
 function pathForSiteUrl(storedPath) {
     return storedPath.startsWith('./') ? storedPath.slice(2) : storedPath;
 }
