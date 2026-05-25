@@ -16,7 +16,8 @@ export function renderNav(navSelector: string) {
     nav.appendChild(home);
 
     for (const page of pages) {
-        const href = `/${page.path}/`;
+        const urlPath = page.path.startsWith('./') ? page.path.slice(2) : page.path;
+        const href = `/${urlPath}/`;
         const a = document.createElement('a');
         a.href = href;
         a.textContent = page.folder;
@@ -36,4 +37,3 @@ function normalizePathname(pathname: string) {
     return p;
 }
 
-renderNav('#page-nav');

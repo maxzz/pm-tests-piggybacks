@@ -32,7 +32,9 @@ function main() {
         fs.writeFileSync(outFile, content, 'utf8');
         console.log(`Wrote ${toPosixPath(path.relative(rootDir, outFile))} (${pages.length} pages).`);
 
-        const urls = pages.map((p) => `/${ensureTrailingSlash(p.path)}`);
+        const urls = pages.map(
+            (p) => `/${ensureTrailingSlash(pathForSiteUrl(p.path))}`,
+        );
         console.log(`URLs:\n${urls.map((u) => `- ${u}`).join('\n')}`);
     } catch (err) {
         console.error(err instanceof Error ? err.message : String(err));
@@ -60,9 +62,10 @@ function listPageFolders(rootDir, pagesDir) {
             continue;
         }
 
+        const rel = toPosixPath(path.relative(rootDir, folderAbs));
         pages.push({
             folder,
-            path: toPosixPath(path.relative(rootDir, folderAbs)),
+            path: `./${rel}`,
         });
     }
 
@@ -106,6 +109,11 @@ function toPosixPath(path) {
 
 function ensureTrailingSlash(path) {
     return path.endsWith('/') ? path : `${path}/`;
+}
+
+/** Strip leading `./` from generated paths for absolute URL logging. */
+function pathForSiteUrl(storedPath) {
+    return storedPath.startsWith('./') ? storedPath.slice(2) : storedPath;
 }
 
 main();

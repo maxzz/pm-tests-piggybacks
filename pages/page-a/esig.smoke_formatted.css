@@ -715,7 +715,21 @@ body.modeling input.cs-textbox.colorPicker:read-only, body.body-modeling input.c
 body.modeling input.cs-textbox.colorPicker:focus, body.body-modeling input.cs-textbox.colorPicker:focus, body.horizon-desktop input.cs-textbox.colorPicker:focus, body.frame-modeling input.cs-textbox.colorPicker:focus, body.reg-FontSize input.cs-textbox.colorPicker:focus {
   outline:none
 }
+
+.singer-comments > div > span {
+    padding-top: 2rem !important;
+    width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+}
+
 .cs-textarea textarea {
+  flex-shrink: 1;
+  min-width: 0 !important;
+  width: 100% !important;
+  max-width: 474px;
+
   color:#000;
   background-color:#fff;
   border:1px solid #969696;

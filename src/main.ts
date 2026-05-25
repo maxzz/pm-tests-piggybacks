@@ -3,6 +3,7 @@ import viteLogo from './assets/vite.svg';
 import heroImg from './assets/hero.png';
 
 import './style.css';
+import { renderNav } from './components/1-headers';
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 <nav id="page-nav" aria-label="Pages"></nav>
@@ -14,5 +15,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   </div>
 </section>
 `;
+
+renderNav('#page-nav');
 
 //setupCounter(document.querySelector<HTMLButtonElement>('#counter')!)

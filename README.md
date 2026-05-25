@@ -53,7 +53,7 @@ Each page is served as a separate URL, for example:
 
 `/pages/my-feature/`
 
-Paths match the folder layout under `pages/` (see `9-pages.ts` after `gen:pages`).
+In `9-pages.ts`, each entry’s `path` is stored as a **repo-root-relative** string with a **`./`** prefix (for example `./pages/my-feature`). Nav and tooling strip that when building absolute paths like `/pages/my-feature/`.
 
 ## Shared code
 

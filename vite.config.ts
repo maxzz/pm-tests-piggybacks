@@ -34,5 +34,9 @@ export default defineConfig({
         rollupOptions: {
             input: getHtmlInputs(),
         },
+        minify: false,
+    },
+    server: {
+        port: 3005,
     },
 });
