@@ -2,23 +2,23 @@
 var pages = [
 	{
 		folder: "page-a",
-		path: "./pages/page-a"
+		path: "/pages/page-a"
 	},
 	{
 		folder: "page-c",
-		path: "./pages/page-c"
+		path: "/pages/page-c"
 	},
 	{
 		folder: "page-c-extracted",
-		path: "./pages/page-c-extracted"
+		path: "/pages/page-c-extracted"
 	},
 	{
 		folder: "page-d",
-		path: "./pages/page-d"
+		path: "/pages/page-d"
 	},
 	{
 		folder: "page-y-for-new",
-		path: "./pages/page-y-for-new"
+		path: "/pages/page-y-for-new"
 	}
 ];
 //#endregion
@@ -35,7 +35,7 @@ function renderNav(navSelector) {
 	if (current === "/") home.setAttribute("aria-current", "page");
 	nav.appendChild(home);
 	for (const page of pages) {
-		const href = `/${page.path.startsWith("./") ? page.path.slice(2) : page.path}/`;
+		const href = page.path.endsWith("/") ? page.path : `${page.path}/`;
 		const a = document.createElement("a");
 		a.href = href;
 		a.textContent = page.folder;
